@@ -24,7 +24,7 @@ export default function DashboardHome() {
   }, []);
 
   return (
-    <div className="max-w-[1400px] mx-auto w-full px-6 lg:px-20 py-16 pb-32 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+    <div className="max-w-[1600px] mx-auto w-full px-6 lg:px-12 xl:px-20 py-16 pb-32 animate-in fade-in slide-in-from-bottom-4 duration-1000 overflow-x-hidden">
       
       {/* Structural Header */}
       <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-12">
@@ -32,7 +32,7 @@ export default function DashboardHome() {
             <div className="inline-flex items-center gap-4 text-primary font-black uppercase tracking-[0.4em] text-[11px] mb-8 bg-primary/10 px-5 py-2.5 border-2 border-primary/20">
                <Activity size={14} /> LIVE_UPDATE / ACTIVE
             </div>
-           <h1 className="text-6xl lg:text-9xl font-black mb-10 tracking-[-0.05em] uppercase leading-[0.85]">
+           <h1 className="text-5xl lg:text-8xl font-black mb-10 tracking-[-0.05em] uppercase leading-[0.85]">
               Welcome back.<br />
               <span className="text-gray-500 italic uppercase">{user?.name?.split(' ')[0] || 'ENGINEER'}.</span>
            </h1>
@@ -51,7 +51,7 @@ export default function DashboardHome() {
       </div>
       
       {/* Industrial Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-10 mb-32">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="p-10 border-2 border-black bg-white group hover:shadow-[20px_20px_0px_rgba(0,0,0,0.05)] transition-all">
            <div className="flex items-center justify-between mb-16">
               <div className="w-12 h-12 border-2 border-black flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
@@ -61,7 +61,7 @@ export default function DashboardHome() {
            </div>
            <div>
               <p className="label-mono mb-4 text-gray-500">LESSONS_DONE</p>
-              <h3 className="text-7xl lg:text-9xl font-black tracking-tighter text-black">{loading ? '—' : stats.lessonsCompleted}</h3>
+              <h3 className="text-6xl lg:text-8xl font-black tracking-tighter text-black">{loading ? '—' : stats.lessonsCompleted}</h3>
            </div>
         </motion.div>
 
@@ -74,7 +74,7 @@ export default function DashboardHome() {
            </div>
            <div>
               <p className="label-mono mb-4 text-gray-500">TOTAL_STUDY_TIME</p>
-              <h3 className="text-7xl lg:text-9xl font-black tracking-tighter text-black">{loading ? '—' : stats.hoursWatched}<span className="text-2xl text-gray-700 ml-4">HRS</span></h3>
+              <h3 className="text-6xl lg:text-8xl font-black tracking-tighter text-black">{loading ? '—' : stats.hoursWatched}<span className="text-xl md:text-2xl text-gray-700 ml-4">HRS</span></h3>
            </div>
         </motion.div>
 
