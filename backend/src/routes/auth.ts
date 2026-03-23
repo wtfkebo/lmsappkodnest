@@ -14,15 +14,29 @@ router.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const userIdStr = 'usr_' + Date.now() + Math.floor(Math.random() * 1000);
-    await pool.query(
+    const [result]: any = await pool.query(
       'INSERT INTO users (email, password, userId, name, phone) VALUES (?, ?, ?, ?, ?)', 
       [email, hashedPassword, userIdStr, name, '']
     );
-    res.status(201).json({ message: 'User registered successfully' });
+
+    const user = { id: result.insertId, name, email };
+    const accessToken = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET as string, { expiresIn: '15m' });
+    const refreshToken = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_REFRESH_SECRET as string, { expiresIn: '7d' });
+
+    await pool.query('INSERT INTO refresh_tokens (user_id, token, expires_at) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 7 DAY))', [user.id, refreshToken]);
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+    res.status(201).json({ message: 'User registered successfully', user, accessToken });
   } catch (error: any) {
     console.error("Register Error:", error);
     if (error.code === 'ER_DUP_ENTRY') return res.status(409).json({ error: 'Email already exists' });
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: error.message || 'Server error' });
   }
 });
 

@@ -22,10 +22,10 @@ export default function Register() {
     setError('');
     try {
       const res = await api.post('/auth/register', { name, email, password });
-      storeLogin(res.data.user, res.data.token);
+      storeLogin(res.data.user, res.data.accessToken);
       router.push('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed');
+      setError(err.response?.data?.error || err.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);
     }
