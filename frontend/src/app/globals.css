@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-space), ui-sans-serif, system-ui, sans-serif;
+  
+  --color-background: #F8F8F8;
+  --color-foreground: #111111; /* Darker for better contrast */
+  --color-primary: #FF5722;
+  --color-primary-hover: #E64A19;
+  --color-secondary: #D1D1D1; /* Slightly darker grey */
+  --color-accent: #FFAB91;
+  --color-border: #000000;    /* Real black borders for industrial feel */
+  --color-card: #FFFFFF;
+  --color-card-foreground: #111111;
+  
+  --color-muted: #555555;      /* Much darker than previous gray-400 */
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-size: 16px; /* Increased base size */
+    font-weight: 500; /* Medium base weight for better legibility */
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    cursor: crosshair;
+  }
+
+  /* Standardizing Text Contrast */
+  p {
+    @apply text-muted leading-relaxed font-semibold tracking-wide;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-black tracking-[-0.05em] uppercase text-foreground;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-10 py-6 rounded-none font-black uppercase transition-all flex items-center gap-3 hover:bg-primary-hover shadow-[8px_8px_0px_rgba(0,0,0,1)];
+  }
+
+  .border-industrial {
+    @apply border-2 border-border;
+  }
+
+  .card-nexus {
+    @apply bg-card border-[3px] border-border p-12 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[10px_10px_0px_rgba(0,0,0,0.05)];
+  }
+
+  .card-nexus:hover {
+    @apply border-primary translate-x-[-2px] translate-y-[-2px] shadow-[20px_20px_0px_rgba(255,87,34,0.1)];
+  }
+
+  .label-mono {
+    @apply text-[11px] font-black uppercase tracking-[0.3em] text-black/40;
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-image: radial-gradient(#D1D1D1 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+  }
+
+  .orange-glow {
+    filter: drop-shadow(0 0 15px rgba(255, 87, 34, 0.3));
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border: 2px solid var(--color-background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Animations */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
